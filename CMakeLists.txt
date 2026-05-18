@@ -231,6 +231,12 @@ USER_ADD_DIR(${CMAKE_SOURCE_DIR}/ACE_ECF_26/Algorithm/RLS)
 # 自己的文件加这里（TASK)
 # ==============================
 
+USER_ADD_DIR(${CMAKE_SOURCE_DIR}/ACE_ECF_26/Bsp/I2C)
+USER_ADD_DIR(${CMAKE_SOURCE_DIR}/ACE_ECF_26/Bsp/DWT)
+USER_ADD_DIR(${CMAKE_SOURCE_DIR}/App/MPU6050)
+USER_ADD_DIR(${CMAKE_SOURCE_DIR}/App/config)
+USER_ADD_DIR(${CMAKE_SOURCE_DIR}/App/Mahony)
+
 
 # 判断芯片型号目录是否存在
 if(EXISTS "${CMAKE_SOURCE_DIR}/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.c")
