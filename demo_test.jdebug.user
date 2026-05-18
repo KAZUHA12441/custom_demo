@@ -1,0 +1,37 @@
+
+
+
+Breakpoint=/home/kazuha/code/stm32/custom_demo/App/IMU/MPU6050/mpu6050.cpp:146:9, State=BP_STATE_DISABLED
+Breakpoint=/home/kazuha/code/stm32/custom_demo/App/IMU/MPU6050/mpu6050.cpp:165:51, State=BP_STATE_DISABLED
+OpenDocument="list.c", FilePath="/home/kazuha/code/stm32/custom_demo/Middlewares/Third_Party/FreeRTOS/Source/list.c", Line=140
+OpenDocument="ieee754-sf.S", FilePath="/build/gcc-arm-none-eabi-hYfgK4/gcc-arm-none-eabi-10.3-2021.07/libgcc/config/arm/ieee754-sf.S", Line=0
+OpenDocument="mpu6050.hpp", FilePath="/home/kazuha/code/stm32/custom_demo/App/IMU/MPU6050/mpu6050.hpp", Line=0
+OpenDocument="main.c", FilePath="/home/kazuha/code/stm32/custom_demo/Core/Src/main.c", Line=56
+OpenDocument="stm32f1xx_hal.c", FilePath="/home/kazuha/code/stm32/custom_demo/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.c", Line=290
+OpenDocument="IMUtasks.h", FilePath="/home/kazuha/code/stm32/custom_demo/App/IMU/Task/IMUtasks.h", Line=0
+OpenDocument="_ansi.h", FilePath="/usr/include/newlib/_ansi.h", Line=0
+OpenDocument="mpu6050.cpp", FilePath="/home/kazuha/code/stm32/custom_demo/App/IMU/MPU6050/mpu6050.cpp", Line=149
+OpenDocument="mpu_wrappers.h", FilePath="/home/kazuha/code/stm32/custom_demo/Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h", Line=0
+OpenDocument="stm32f1xx_hal_i2c.c", FilePath="/home/kazuha/code/stm32/custom_demo/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_i2c.c", Line=7314
+OpenDocument="tasks.c", FilePath="/home/kazuha/code/stm32/custom_demo/Middlewares/Third_Party/FreeRTOS/Source/tasks.c", Line=2710
+OpenToolbar="Debug", Floating=0, x=0, y=0
+OpenWindow="Registers 1", DockArea=RIGHT, x=0, y=1, w=300, h=873, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, FilteredItems=[], RefreshRate=1
+OpenWindow="Source Files", DockArea=LEFT, x=0, y=0, w=1069, h=176, FilterBarShown=1, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Disassembly", DockArea=RIGHT, x=0, y=0, w=300, h=248, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Memory 1", DockArea=BOTTOM, x=1, y=0, w=1233, h=318, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, EditorAddress=0x0
+OpenWindow="Watched Data 1", DockArea=LEFT, x=0, y=2, w=1069, h=622, FilterBarShown=1, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Data Sampling", DockArea=LEFT, x=0, y=1, w=1069, h=296, TabPos=1, TopOfStack=0, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, VisibleTab=0, UniformSampleSpacing=0
+OpenWindow="Timeline", DockArea=LEFT, x=0, y=1, w=1069, h=296, TabPos=0, TopOfStack=1, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=1, DataPaneShown=1, PowerPaneShown=1, CodePaneShown=1, PinCursor="Cursor Movable", TimePerDiv="500 ms / Div", TimeStampFormat="Time", DataGraphDrawAsPoints=0, DataGraphLegendShown=1, DataGraphUniformSampleSpacing=0, DataGraphLegendPosition="698;0", DataGraphShowNamesAtCursor=0, PowerGraphDrawAsPoints=0, PowerGraphLegendShown=1, PowerGraphAvgFilterTime=Off, PowerGraphAvgFilterLen=Off, PowerGraphUniformSampleSpacing=0, PowerGraphLegendPosition="857;0", CodeGraphLegendShown=1, CodeGraphLegendPosition="735;0"
+OpenWindow="Console", DockArea=BOTTOM, x=0, y=0, w=1235, h=318, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+SmartViewPlugin="", Page="", Toolbar="Hidden", Window="SmartView 1"
+TableHeader="Data Sampling Table", SortCol="None", SortOrder="ASCENDING", VisibleCols=["Index";"Time"], ColWidths=[100;954]
+TableHeader="Data Sampling Setup", SortCol="Expression", SortOrder="ASCENDING", VisibleCols=["Expression";"Type";"Value";"Min";"Max";"Average";"# Changes";"Min. Change";"Max. Change"], ColWidths=[262;100;100;100;100;100;100;110;114]
+TableHeader="Power Sampling", SortCol="None", SortOrder="ASCENDING", VisibleCols=["Index";"Time";"Ch 0"], ColWidths=[100;100;100]
+TableHeader="Registers 1", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Value";"Description"], ColWidths=[100;105;198]
+TableHeader="RegisterSelectionDialog", SortCol="None", SortOrder="ASCENDING", VisibleCols=[], ColWidths=[]
+TableHeader="TargetExceptionDialog", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Value";"Address";"Description"], ColWidths=[26;26;26;26]
+TableHeader="Watched Data 1", SortCol="Expression", SortOrder="ASCENDING", VisibleCols=["Expression";"Value";"Location";"Refresh";"Access"], ColWidths=[100;100;100;100;654]
+TableHeader="Source Files", SortCol="File", SortOrder="ASCENDING", VisibleCols=["File";"Status";"Size";"#Insts";"Path"], ColWidths=[260;100;100;100;1134]
+WatchedExpression="mpu6050", Window=Watched Data 1
+WatchedExpression="check", Window=Watched Data 1
+WatchedExpression="count", RefreshRate=5, Window=Watched Data 1
