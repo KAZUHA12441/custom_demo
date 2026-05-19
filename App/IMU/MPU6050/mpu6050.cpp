@@ -34,7 +34,7 @@ namespace App
                 HAL_I2C_Mem_Read(&I2C_PORT, MPU6050_ADDR, PWR_MGMT_1, I2C_MEMADD_SIZE_8BIT, &check, 1, 100);
                 if (check == 0x00)
                 {
-                    osDelay(100);  // 等待 MPU6050 唤醒稳定
+                    osDelay(500);  // 预热 500ms 让温度初步稳定
                     offsetGyroCalibrate();
                     initBody();
                     is_init = true;
@@ -160,19 +160,34 @@ namespace App
                 readACCEL();
                 readGYRO();
                 MahonyAHRSupdateIMU(q, Gyro[0], Gyro[1], Gyro[2], Accel[0], Accel[1], Accel[2]);
+
+                // R_end2base = R_imu2base * Rx(-90°)
+                // q_end2base = q_imu2base ⊗ q_end2imu  (右乘)
+                // q_end2imu = rotx(-90°) = [cos45°, -sin45°, 0, 0]
+                constexpr float mw = 0.70710678f;
+                constexpr float mx = -0.70710678f;
+                float mq[4];
+                mq[0] = q[0]*mw - q[1]*mx;             // q0*m0 - q1*m1
+                mq[1] = q[0]*mx + q[1]*mw;             // q0*m1 + q1*m0
+                mq[2] = q[2]*mw + q[3]*mx;             // q2*m0 + q3*m1 (note: m2=0,m3=0)
+                mq[3] = q[3]*mw - q[2]*mx;             // q3*m0 - q2*m1
+
                 if (order == RotationOrder::ZYX)
                 {
-                    zyx_eula_angle = ZYX_Solution(q);
+                    zyx_eula_angle_temp = ZYX_Solution(q);
+                    
+                    zyx_eula_angle = ZYX_Solution(mq);
                 }
                 else if (order == RotationOrder::ZYZ)
                 {
-                    zyz_eula_angle = ZYZ_Solution(q);
+                    zyz_eula_angle = ZYZ_Solution(mq);
                 }
                 if (rotation_matrix_update)
                 {
-                    quaternionToRotationMatrix(q, rotation_matrix);
+                    quaternionToRotationMatrix(mq, rotation_matrix);
                 }
             }
+            
         }
 
         inline float *MPU6050_c::getQuaternion(void)

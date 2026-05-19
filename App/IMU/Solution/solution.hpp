@@ -28,12 +28,14 @@ namespace App
             float Yaw2;
         };
 
+        constexpr float RAD_TO_DEG = 57.29577951308232f; // 180/PI, float to avoid double-promotion from M_PI
+
         inline ZYXEulerAngle ZYX_Solution(float *q)
         {
             float Yaw, Pitch, Roll;
-            Yaw = atan2f(2.0f * (q[0] * q[3] + q[1] * q[2]), 1.0f - 2.0f * (q[2] * q[2] + q[3] * q[3]))*180.0f/M_PI;
-            Pitch = asinf(2.0f * (q[0] * q[2] - q[3] * q[1]))*180.0f/M_PI;
-            Roll = atan2f(2.0f * (q[0] * q[1] + q[2] * q[3]), 1.0f - 2.0f * (q[1] * q[1] + q[2] * q[2]))*180.0f/M_PI;
+            Yaw = atan2f(2.0f * (q[0] * q[3] + q[1] * q[2]), 1.0f - 2.0f * (q[2] * q[2] + q[3] * q[3])) * RAD_TO_DEG;
+            Pitch = asinf(2.0f * (q[0] * q[2] - q[3] * q[1])) * RAD_TO_DEG;
+            Roll = atan2f(2.0f * (q[0] * q[1] + q[2] * q[3]), 1.0f - 2.0f * (q[1] * q[1] + q[2] * q[2])) * RAD_TO_DEG;
             return {Yaw,Pitch,Roll}; // 或者返回 Pitch 和 Roll，根据需要
         }
         inline void quaternionToRotationMatrix(float *q, float R[3][3])
@@ -80,5 +82,7 @@ namespace App
             }
             return {Yaw1, Pitch, Yaw2};
         }
+
+        
     }
 }

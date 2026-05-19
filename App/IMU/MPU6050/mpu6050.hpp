@@ -39,6 +39,7 @@ namespace App
             float q[4] = {1.0f, 0.0f, 0.0f, 0.0f}; // 四元数
             ZYZEulerAngle zyz_eula_angle = {0,0,0}; // 欧拉角
             ZYXEulerAngle zyx_eula_angle = {0,0,0}; // 欧拉角
+            ZYXEulerAngle zyx_eula_angle_temp = {0,0,0}; // 欧拉角
             float rotation_matrix[3][3] = {0.0f};           // 旋转矩阵
             RotationOrder order;
             bool rotation_matrix_update = false; // 旋转矩阵是否已更新

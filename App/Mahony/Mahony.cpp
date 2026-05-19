@@ -67,7 +67,7 @@ void MahonyAHRSupdateIMU(float q[4], float gx, float gy, float gz, float ax, flo
             integralFBx = 0.0f;
             integralFBy = 0.0f;
             integralFBz = 0.0f;
-            // 本帧跳过修正，下帧用新四元数继续
+            
         }
         else
         {

@@ -17,5 +17,11 @@
 #define ACCEL_SENSITIVITY 8192.0f
 #define GYRO_SENSITIVITY 65.5f
 
+
+
+#define END_BASE_YAW 0.0f
+#define END_BASE_PITCH 0.0f
+#define END_BASE_ROLL -90.0f
+
 #define I2C_PORT hi2c1
 
