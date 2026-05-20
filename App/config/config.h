@@ -24,4 +24,14 @@
 #define END_BASE_ROLL -90.0f
 
 #define I2C_PORT hi2c1
+#define ADC_PORT hadc1
+
+// 摇杆中位 ADC（实测）
+#define TRASLATE_ADC_MID_X 3204.0f
+#define TRASLATE_ADC_MID_Y 2961.0f
+// 正负分开 scale：正 delta→4095-mid，负 delta→mid-0，满偏均映射到 ±256
+#define TRASLATE_ADC_SCALE_X_POS (256.0f / (4095.0f - TRASLATE_ADC_MID_X))  // ≈0.287
+#define TRASLATE_ADC_SCALE_X_NEG (256.0f / TRASLATE_ADC_MID_X)               // ≈0.08
+#define TRASLATE_ADC_SCALE_Y_POS (256.0f / (4095.0f - TRASLATE_ADC_MID_Y))  // ≈0.226
+#define TRASLATE_ADC_SCALE_Y_NEG (256.0f / TRASLATE_ADC_MID_Y)               // ≈0.086
 

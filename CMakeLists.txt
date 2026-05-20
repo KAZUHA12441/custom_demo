@@ -238,7 +238,9 @@ USER_ADD_DIR(${CMAKE_SOURCE_DIR}/App/IMU/Solution)
 USER_ADD_DIR(${CMAKE_SOURCE_DIR}/App/config)
 USER_ADD_DIR(${CMAKE_SOURCE_DIR}/App/Mahony)
 USER_ADD_DIR(${CMAKE_SOURCE_DIR}/App/IMU/Task)
-USER_ADD_DIR(${CMAKE_SOURCE_DIR}/Matrix_and_Robotics_on_STM32/src)
+USER_ADD_DIR(${CMAKE_SOURCE_DIR}/App/Move_attitude)
+USER_ADD_DIR(${CMAKE_SOURCE_DIR}/App/Translate)
+USER_ADD_DIR(${CMAKE_SOURCE_DIR}/App/Translate/Task)
 
 
 # 判断芯片型号目录是否存在

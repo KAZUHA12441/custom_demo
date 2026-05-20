@@ -26,6 +26,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "IMUtasks.h"
+#include "TranslateTask.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -52,6 +53,7 @@ osThreadId defaultTaskHandle;
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
 osThreadId IMUTaskHandle;
+osThreadId TranslateTaskHandle;
 /* USER CODE END FunctionPrototypes */
 
 void StartDefaultTask(void const * argument);
@@ -111,6 +113,9 @@ void MX_FREERTOS_Init(void) {
   /* add threads, ... */
    osThreadDef(IMUTask, imuTask, osPriorityNormal, 0, 512);
   IMUTaskHandle = osThreadCreate(osThread(IMUTask), NULL);
+
+  osThreadDef(TranslateTask, translateTask, osPriorityNormal, 0, 256);
+  TranslateTaskHandle = osThreadCreate(osThread(TranslateTask), NULL);
   /* USER CODE END RTOS_THREADS */
 
 }
