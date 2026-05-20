@@ -28,12 +28,12 @@ namespace App
             inline float *getQuaternion(void);
 
         private:
-            uint8_t accel_buffer[6];
-            uint8_t gyro_buffer[6];
-            int16_t accelf[3];
-            int16_t gyrof[3];
-            float Accel[3];
-            float Gyro[3];
+            uint8_t accel_buffer[6] = {0};
+            uint8_t gyro_buffer[6] = {0};
+            int16_t accelf[3] = {0, 0, 0};
+            int16_t gyrof[3] = {0, 0, 0};
+            float Accel[3] = {0.0f, 0.0f, 0.0f};
+            float Gyro[3] = {0.0f, 0.0f, 0.0f};
             bool is_init = false;                      // 是否纠正零偏
             float offset_gyro[3] = {0.0f, 0.0f, 0.0f}; // 陀螺仪零偏
             float q[4] = {1.0f, 0.0f, 0.0f, 0.0f}; // 四元数

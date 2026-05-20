@@ -2,7 +2,7 @@
 #include <math.h>
 #include "cmsis_os.h"
 
-
+static uint32_t count = 0;
 namespace App
 {
     namespace IMU
@@ -132,9 +132,24 @@ namespace App
             accelf[2] = (int16_t)((accel_buffer[4] << 8) | accel_buffer[5]);
 
             
+
             Accel[0] = (float)accelf[0] / ACCEL_SENSITIVITY;
-            Accel[1] = (float)accelf[1] / ACCEL_SENSITIVITY;
-            Accel[2] = (float)accelf[2] / ACCEL_SENSITIVITY;
+            Accel[1] = (float)accelf[2] / ACCEL_SENSITIVITY;
+            Accel[2] = (float)accelf[1] / ACCEL_SENSITIVITY;
+
+            // 一阶低通: fc≈4Hz @500Hz, 衰减高频噪声尖峰
+            {
+                static float ax_f = 0, ay_f = 0, az_f = 0;
+                constexpr float alpha = 0.05f;
+                ax_f += alpha * (Accel[0] - ax_f);
+                ay_f += alpha * (Accel[1] - ay_f);
+                az_f += alpha * (Accel[2] - az_f);
+                Accel[0] = ax_f;
+                Accel[1] = ay_f;
+                Accel[2] = az_f;
+            }
+            
+            
            
         }
 
@@ -149,8 +164,25 @@ namespace App
 
             constexpr float DEG_TO_RAD = 0.01745329252f;
             Gyro[0] = ((float)gyrof[0] / GYRO_SENSITIVITY - offset_gyro[0]) * DEG_TO_RAD;
-            Gyro[1] = ((float)gyrof[1] / GYRO_SENSITIVITY - offset_gyro[1]) * DEG_TO_RAD;
-            Gyro[2] = ((float)gyrof[2] / GYRO_SENSITIVITY - offset_gyro[2]) * DEG_TO_RAD;
+            Gyro[1] = -((float)gyrof[2] / GYRO_SENSITIVITY - offset_gyro[2]) * DEG_TO_RAD;
+            Gyro[2] = ((float)gyrof[1] / GYRO_SENSITIVITY - offset_gyro[1]) * DEG_TO_RAD;
+
+            // 一阶低通: fc≈4Hz @500Hz, 衰减高频噪声尖峰
+            {
+                static float gx_f = 0, gy_f = 0, gz_f = 0;
+                constexpr float alpha = 0.05f;
+                gx_f += alpha * (Gyro[0] - gx_f);
+                gy_f += alpha * (Gyro[1] - gy_f);
+                gz_f += alpha * (Gyro[2] - gz_f);
+                Gyro[0] = gx_f;
+                Gyro[1] = gy_f;
+                Gyro[2] = gz_f;
+            }
+
+            // 死区: ±0.01 rad/s (~0.57°/s), 滤除残余底噪
+            if (fabsf(Gyro[0]) < 0.01f) Gyro[0] = 0.0f;
+            if (fabsf(Gyro[1]) < 0.01f) Gyro[1] = 0.0f;
+            if (fabsf(Gyro[2]) < 0.01f) Gyro[2] = 0.0f;
         }
 
         void MPU6050_c::Update(void)
@@ -159,34 +191,34 @@ namespace App
             {
                 readACCEL();
                 readGYRO();
+                
                 MahonyAHRSupdateIMU(q, Gyro[0], Gyro[1], Gyro[2], Accel[0], Accel[1], Accel[2]);
 
-                // R_end2base = R_imu2base * Rx(-90°)
-                // q_end2base = q_imu2base ⊗ q_end2imu  (右乘)
-                // q_end2imu = rotx(-90°) = [cos45°, -sin45°, 0, 0]
-                constexpr float mw = 0.70710678f;
-                constexpr float mx = -0.70710678f;
-                float mq[4];
-                mq[0] = q[0]*mw - q[1]*mx;             // q0*m0 - q1*m1
-                mq[1] = q[0]*mx + q[1]*mw;             // q0*m1 + q1*m0
-                mq[2] = q[2]*mw + q[3]*mx;             // q2*m0 + q3*m1 (note: m2=0,m3=0)
-                mq[3] = q[3]*mw - q[2]*mx;             // q3*m0 - q2*m1
+                
+                // constexpr float mw = 0.70710678f;
+                // constexpr float mx = -0.70710678f;
+                // float mq[4];
+                // mq[0] = q[0]*mw - q[1]*mx;             // q0*m0 - q1*m1
+                // mq[1] = q[0]*mx + q[1]*mw;             // q0*m1 + q1*m0
+                // mq[2] = q[2]*mw + q[3]*mx;             // q2*m0 + q3*m1 (note: m2=0,m3=0)
+                // mq[3] = q[3]*mw - q[2]*mx;             // q3*m0 - q2*m1
 
                 if (order == RotationOrder::ZYX)
                 {
                     zyx_eula_angle_temp = ZYX_Solution(q);
-                    
-                    zyx_eula_angle = ZYX_Solution(mq);
                 }
                 else if (order == RotationOrder::ZYZ)
                 {
-                    zyz_eula_angle = ZYZ_Solution(mq);
+                    zyz_eula_angle = ZYZ_Solution(q);
                 }
                 if (rotation_matrix_update)
                 {
-                    quaternionToRotationMatrix(mq, rotation_matrix);
+                    quaternionToRotationMatrix(q, rotation_matrix);
                 }
+                count++;
+                
             }
+            osDelay(2);
             
         }
 

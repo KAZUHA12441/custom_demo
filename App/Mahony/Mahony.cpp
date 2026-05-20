@@ -6,10 +6,10 @@ namespace App
 
 void MahonyAHRSupdateIMU(float q[4], float gx, float gy, float gz, float ax, float ay, float az)
 {
-    float recipNorm;
-    float halfvx, halfvy, halfvz;
-    float halfex, halfey, halfez;
-    float qa, qb, qc;
+    float recipNorm = 0.0f;
+    float halfvx = 0.0f, halfvy = 0.0f, halfvz = 0.0f;
+    float halfex = 0.0f, halfey = 0.0f, halfez = 0.0f;
+    float qa = 0.0f, qb = 0.0f, qc = 0.0f;
 
     // 加速度模长偏离 1g 超过 15% 时跳过修正，防止冲击/运动污染积分项
     float acc_norm_sq = ax * ax + ay * ay + az * az;
@@ -84,7 +84,7 @@ void MahonyAHRSupdateIMU(float q[4], float gx, float gy, float gz, float ax, flo
 
             gx += integralFBx;
             gy += integralFBy;
-            gz += integralFBz;
+            //gz += integralFBz;
         }
         else
         {
