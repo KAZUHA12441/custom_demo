@@ -133,11 +133,12 @@ namespace App
 
             
 
+            //换个方向，并转换为g
             Accel[0] = (float)accelf[0] / ACCEL_SENSITIVITY;
-            Accel[1] = (float)accelf[2] / ACCEL_SENSITIVITY;
+            Accel[1] = -(float)accelf[2] / ACCEL_SENSITIVITY;
             Accel[2] = (float)accelf[1] / ACCEL_SENSITIVITY;
 
-            // 一阶低通: fc≈4Hz @500Hz, 衰减高频噪声尖峰
+            // 滤下高频振动尖峰，避免对姿态解算的干扰，不知道为什么就是滤不干净
             {
                 static float ax_f = 0, ay_f = 0, az_f = 0;
                 constexpr float alpha = 0.05f;
@@ -162,6 +163,9 @@ namespace App
             gyrof[1] = (int16_t)((gyro_buffer[2] << 8) | gyro_buffer[3]);
             gyrof[2] = (int16_t)((gyro_buffer[4] << 8) | gyro_buffer[5]);
 
+
+
+            //换一个方向，并转换为弧度/s
             constexpr float DEG_TO_RAD = 0.01745329252f;
             Gyro[0] = ((float)gyrof[0] / GYRO_SENSITIVITY - offset_gyro[0]) * DEG_TO_RAD;
             Gyro[1] = -((float)gyrof[2] / GYRO_SENSITIVITY - offset_gyro[2]) * DEG_TO_RAD;
@@ -179,7 +183,7 @@ namespace App
                 Gyro[2] = gz_f;
             }
 
-            // 死区: ±0.01 rad/s (~0.57°/s), 滤除残余底噪
+            // 设个死区，抑制小范围内的噪声尖峰
             if (fabsf(Gyro[0]) < 0.01f) Gyro[0] = 0.0f;
             if (fabsf(Gyro[1]) < 0.01f) Gyro[1] = 0.0f;
             if (fabsf(Gyro[2]) < 0.01f) Gyro[2] = 0.0f;

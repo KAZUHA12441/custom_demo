@@ -1,3 +1,6 @@
 [submodule "ACE_ECF_26"]
 	path = ACE_ECF_26
 	url = https://github.com/DGUT-ACE-EMBEDDED/ACE_ECF_26.git
+[submodule "Matrix_and_Robotics_on_STM32"]
+	path = Matrix_and_Robotics_on_STM32
+	url = https://github.com/SJTU-RoboMaster-Team/Matrix_and_Robotics_on_STM32.git
