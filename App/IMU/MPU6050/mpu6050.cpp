@@ -226,36 +226,6 @@ namespace App
             
         }
 
-        inline float *MPU6050_c::getQuaternion(void)
-        {
-            return q;
-        }
-        inline ZYZEulerAngle *MPU6050_c::getZYZEulerAngle(void)
-        {
-            if (order == RotationOrder::ZYZ)
-            {
-                return &zyz_eula_angle;
-            }
-            return nullptr;
-        }
-
-        inline ZYXEulerAngle *MPU6050_c::getZYXEulerAngle(void)
-        {
-            if (order == RotationOrder::ZYX)
-            {
-                return &zyx_eula_angle;
-            }
-            return nullptr;
-        }
-
-        inline float *MPU6050_c::getRotationMatrix(void)
-        {
-            if (rotation_matrix_update)
-            {
-                return &rotation_matrix[0][0];
-            }
-            return nullptr;
-        }
     }
 
 }

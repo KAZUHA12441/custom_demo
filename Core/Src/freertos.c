@@ -27,6 +27,7 @@
 /* USER CODE BEGIN Includes */
 #include "IMUtasks.h"
 #include "TranslateTask.h"
+#include "MoveAttitudeTask.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -54,6 +55,7 @@ osThreadId defaultTaskHandle;
 /* USER CODE BEGIN FunctionPrototypes */
 osThreadId IMUTaskHandle;
 osThreadId TranslateTaskHandle;
+osThreadId MoveAttitudeTaskHandle;
 /* USER CODE END FunctionPrototypes */
 
 void StartDefaultTask(void const * argument);
@@ -116,6 +118,9 @@ void MX_FREERTOS_Init(void) {
 
   osThreadDef(TranslateTask, translateTask, osPriorityNormal, 0, 256);
   TranslateTaskHandle = osThreadCreate(osThread(TranslateTask), NULL);
+
+  osThreadDef(MoveAttitudeTask, moveAttitudeTask, osPriorityNormal, 0, 256);
+  MoveAttitudeTaskHandle = osThreadCreate(osThread(MoveAttitudeTask), NULL);
   /* USER CODE END RTOS_THREADS */
 
 }
