@@ -26,6 +26,8 @@ namespace App
 
     void MoveAttitude::Update()
     {
+        if(mpu6050->initFlag())
+        {
         // 获取四元数和位置
         float *q = mpu6050->getQuaternion();
         for (int i = 0; i < 4; i++)
@@ -34,24 +36,23 @@ namespace App
         }
         IMU::quaternionToRotationMatrix(pa.q, reinterpret_cast<float(*)[3]>(rotation_matrix->arm_mat_.pData));
 
-        //拼成4x4的变换矩阵
-        auto tmp1 = hstack(*rotation_matrix, *pos);
-        *transform_matrix = vstack(tmp1, *bottom);
-        
-        auto AugmentedPos = vstack(*temp_pos, Matrixf<1,1>::eye());
-
-
-        auto new_pos = *transform_matrix * AugmentedPos;
+        auto new_pos = *rotation_matrix * (*temp_pos);
         
         
         pa.x = new_pos.arm_mat_.pData[0];
         pa.y = new_pos.arm_mat_.pData[1];
         pa.z = new_pos.arm_mat_.pData[2];
 
-        pos->arm_mat_.pData[0] = pa.x;
-        pos->arm_mat_.pData[1] = pa.y;
-        pos->arm_mat_.pData[2] = pa.z;
-         
+        static uint32_t tick = 0;
+
+        send_data = {0xEE,pa.x,pa.y,pa.z,q[1],q[2],q[3],q[0],0xED};
+        if (CDC_Transmit_FS(reinterpret_cast<uint8_t*>(&send_data), sizeof(send_data)) != USBD_OK)
+        {
+            // USBD_BUSY: 上一次传输尚未完成，跳过本帧
+            // USBD_FAIL: USB未配置，跳过本帧
+        }
+        tick++;
+        }
     }
 
     QuaternionPosition MoveAttitude::getQuaternionAndPosition()
