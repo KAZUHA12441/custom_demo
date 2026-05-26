@@ -22,6 +22,7 @@ namespace App
             void Update(void);
             void offsetGyroCalibrate(void);
             float *initBody(void);
+            inline bool initFlag() { return is_init; }
             inline ZYZEulerAngle *getZYZEulerAngle(void) { return (order == RotationOrder::ZYZ) ? &zyz_eula_angle : nullptr; }
             inline ZYXEulerAngle *getZYXEulerAngle(void) { return (order == RotationOrder::ZYX) ? &zyx_eula_angle : nullptr; }
             inline float *getRotationMatrix(void) { return rotation_matrix_update ? &rotation_matrix[0][0] : nullptr; }

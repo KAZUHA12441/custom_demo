@@ -41,26 +41,25 @@ namespace App
 
         if (xy_data_[0] > -20.0f && xy_data_[0] < 20.0f)
             xy_data_[0] = 0.0f;
+        else if (xy_data_[0] > 100.0f)
+            (*pos_).arm_mat_.pData[1] = -0.001f;
+        else if (xy_data_[0] < -100.0f)
+            (*pos_).arm_mat_.pData[1] = 0.001f;
 
         if (xy_data_[1] > -20.0f && xy_data_[1] < 20.0f)
             xy_data_[1] = 0.0f;
+        else if (xy_data_[1] > 100.0f)
+            (*pos_).arm_mat_.pData[0] = -0.001f;
+        else if (xy_data_[1] < -100.0f)
+            (*pos_).arm_mat_.pData[0] = 0.001f;
 
         if (xy_data_[0] == 0.0f && xy_data_[1] == 0.0f)
         {
             resetPos();
             tick = 0;
         }
-        else
-        {
-            tick++;
-            if (tick >= 1000) // 1秒钟更新一次位置，避免过快更新导致的抖动
-            {
-                (*pos_).arm_mat_.pData[0] += -xy_data_[1] * INCREMENT_GAIN; // x坐标
-                (*pos_).arm_mat_.pData[1] += -xy_data_[0] * INCREMENT_GAIN; // y坐标
-                (*pos_).arm_mat_.pData[2] = 0.0f;
-                tick = 0;
-            }
-        }
+        
+        
     }
 
     void Translate::resetPos(void)
